@@ -16,10 +16,3 @@ requests:
 ```sh
 cargo run -- -p sample-config -e local req run json/posts/get
 ```
-
-```go
-package main
-func main() {
-	fmt.Println("Welcome to json-server!\n")
-}
-```
