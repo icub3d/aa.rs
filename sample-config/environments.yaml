@@ -1,0 +1,4 @@
+environments:
+  local:
+    scheme: http
+    host: localhost:3000

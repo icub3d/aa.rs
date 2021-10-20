@@ -1,0 +1,26 @@
+requests:
+  json/posts/get:
+    method: GET
+    path: /posts
+    host: "{host}"
+    scheme: "{scheme}"
+    query:
+      _limit: 10
+  json/posts/new:
+    method: POST
+    path: /posts
+    host: "{host}"
+    scheme: "{scheme}"
+    body:
+      type: File
+      content_type: "application/json"
+      path: ./sample-files/post.json
+  json/posts/new-get:
+    method: GET
+    path: /posts/{response:json/posts/new:$.id}
+    host: "{host}"
+    scheme: "{scheme}"
+    body:
+      type: File
+      content_type: "application/json"
+      path: ./sample-files/post.json
