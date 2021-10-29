@@ -23,11 +23,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.builds.os }}
     needs: release
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        builds: [{os: ubuntu-latest, binary: main, name: linux},{os: windows-latest, binary: main.exe, name: win64},{os: macos-latest, binary: main, name: darwin}]
     steps:
     - uses: actions/checkout@v1
     - uses: actions-rs/toolchain@v1
@@ -38,12 +38,12 @@ jobs:
       with:
         command: build
         args: --release
-    - name: upload ${{ matrix.build }} artifact
+    - name: upload ${{ matrix.builds.name }} artifact
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ needs.release.outputs.upload_url }}
-        asset_path: ./target/release/main
-        asset_name: aa-${{ matrix.os }}
+        asset_path: ./target/release/${{matrix.builds.binary}}
+        asset_name: aa-${{ matrix.builds.name }}
         asset_content_type: application/octet-stream
