@@ -1,15 +1,14 @@
 use std::fs::File;
 
-use clap::{AppSettings, Clap};
+use clap::Parser;
 use serde_yaml::from_reader;
 use walkdir::WalkDir;
 
 use aa::project::Project;
 
 /// aa - API Automation tool in the terminal.
-#[derive(Clap)]
+#[derive(Parser)]
 #[clap(version = "1.0", author = "Joshua Marsh <joshua@themarshians.com>")]
-#[clap(setting = AppSettings::ColoredHelp)]
 struct Options {
 	/// Path to the directory of the aa project you want to use.
 	#[clap(short, long, env = "AA_PROJECT_PATH", default_value = "~/.config/aa")]
@@ -24,7 +23,7 @@ struct Options {
 	command: Commands,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 enum Commands {
 	/// List the environments in the project.
 	#[clap(name = "env")]
@@ -35,7 +34,7 @@ enum Commands {
 	Requests(RequestsCommands),
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 struct EnvironmentsCommand {
 	/// Print out the values in the environment as well.
 	#[clap(short)]
@@ -46,7 +45,7 @@ struct EnvironmentsCommand {
 	environments: Vec<String>,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 enum RequestsCommands {
 	/// List the requests in the project.
 	#[clap()]
@@ -57,7 +56,7 @@ enum RequestsCommands {
 	Run(RequestsRun),
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 struct RequestsList {
 	/// Print out the details of the request as well.
 	#[clap(short)]
@@ -68,7 +67,7 @@ struct RequestsList {
 	requests: Vec<String>,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 struct RequestsRun {
 	/// The list of requests to run.
 	#[clap()]
