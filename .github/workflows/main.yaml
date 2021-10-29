@@ -26,16 +26,7 @@ jobs:
     needs: release
     strategy:
       matrix:
-        include:
-        - build: linux
-          os: ubuntu-latest
-          rust: stable
-        - build: macos
-          os: macos-latest
-          rust: stable
-        - build: windows
-          os: windows-latest
-          rust: stable
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
     - uses: actions/checkout@v1
     - uses: actions-rs/toolchain@v1
@@ -53,5 +44,5 @@ jobs:
       with:
         upload_url: ${{ needs.release.outputs.upload_url }}
         asset_path: ./target/release/main
-        asset_name: aa-x86_64-${{ matrix.build }}
+        asset_name: aa-${{ matrix.os }}
         asset_content_type: application/octet-stream
